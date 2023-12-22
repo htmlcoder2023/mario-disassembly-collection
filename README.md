@@ -5,15 +5,11 @@ Credits:
 
 Doppelganger - smb1 + smb2j disassembly
 
-Jakiki6 - modified smb1 disassembly
-
 MrWint - smb1 PAL disassembly
 
 Xkeeper0 - smb2 disassembly
 
 Captainsouthbird - smb3 disassembly
-
-Fortenbt - modified smb3 disassembly
 
 Kaspermeerts - Super Mario Land disassembly
 
@@ -30,3 +26,7 @@ Bonimy - smas disassembly
 KarisaAdvynia - smbdx disassembly + modified sma2 disassembly + sma3 disassembly + sma4 disassembly
 
 Atasro2 - sma2 disassembly
+
+Jakiki6 - modified smb1 disassembly
+
+Fortenbt - modified smb3 disassembly
