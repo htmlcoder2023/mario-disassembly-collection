@@ -7,6 +7,8 @@ Doppelganger - smb1 + smb2j disassembly
 
 Jakiki6 - modified smb1 disassembly
 
+MrWint - smb1 PAL disassembly
+
 Xkeeper0 - smb2 disassembly
 
 Captainsouthbird - smb3 disassembly
@@ -15,15 +17,11 @@ Fortenbt - modified smb3 disassembly
 
 Kaspermeerts - Super Mario Land disassembly
 
-Galaxyhaxz - smw disassembly
-
-IsoFrieze - modified smw disassembly
+IsoFrieze - smw disassembly
 
 Froggestspirit - Super Mario Land: 6 Golden Coins disassembly
 
-Farisawan-2000 - sm64 disassembly
-
-Brunovalads - Super Mario World 2: Yoshi's Island disassembly
+n64decomp - sm64 disassembly
 
 Threecreepio - smbann disassembly
 
