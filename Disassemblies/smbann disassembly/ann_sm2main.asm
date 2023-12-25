@@ -667,124 +667,91 @@ GameOverMode          = 3
 
 ; imports from other files
 ;SUBROUTINES IN SM2DATA2 AND SM2DATA4
-.import UpsideDownPipe_High
-.import UpsideDownPipe_Low
-.import WindOn
-.import WindOff
-.import SimulateWind
-.import BlowPlayerAround
-.import MoveUpsideDownPiranhaP
-.import ChangeHalfwayPages
+UpsideDownPipe_High    = $c470
+UpsideDownPipe_Low     = $c475
+WindOn                 = $c5be
+WindOff                = $c5c2
+SimulateWind           = $c550
+BlowPlayerAround       = $c4fe
+MoveUpsideDownPiranhaP = $c4c0
 ;SUBROUTINES IN SM2DATA3
-.import EraseLivesLines
-.import RunMushroomRetainers
-.import EndingDiskRoutines
-.import AwardExtraLives
-.import PrintVictoryMsgsForWorld8
-.import FadeToBlue
-.import ScreenSubsForFinalRoom
+EraseLivesLines           = $c710
+RunMushroomRetainers      = $c727
+EndingDiskRoutines        = $c738
+ChangeHalfwayPages        = $c3d6
+AwardExtraLives           = $c686
+PrintVictoryMsgsForWorld8 = $c642
+FadeToBlue                = $c6ca
+ScreenSubsForFinalRoom    = $c5fe
 ;LABELS FROM SM2DATA3
-.import ANNEndingPalette
-.import HardWorldJumpSpringHandler
-.import HardWorldEnemyGfxHandler
-.import WriteNameToVictoryMsg
-.import UnusedAttribData
-.import FinalRoomPalette
-.import ThankYouMessageFinal
-.import PeaceIsPavedMsg
-.import WithKingdomSavedMsg
-.import HurrahMsg
-.import OurOnlyHeroMsg
-.import ThisEndsYourTripMsg
-.import OfALongFriendshipMsg
-.import PointsAddedMsg
-.import ForEachPlayerLeftMsg
-.import PrincessPeachsRoom
-.import FantasyWorld9Msg
-.import SuperPlayerMsg
-;from sm2data2
-.import E_Area06
-.import E_Area07
-.import E_Area04
-.import E_Area05
-.import E_Area09
-.import E_Area0B
-.import E_Area1E
-.import E_Area1F
-.import E_Area12
-.import E_Area21
-.import E_Area15
-.import E_Area16
-.import E_Area18
-.import E_Area19
-.import E_Area1A
-.import E_Area1B
-.import E_Area22
-.import E_Area27
-.import E_Area28
-.import E_Area2B
-.import E_Area2A
-.import L_Area06
-.import L_Area07
-.import L_Area04
-.import L_Area05
-.import L_Area09
-.import L_Area0B
-.import L_Area1E
-.import L_Area1F
-.import L_Area12
-.import L_Area21
-.import L_Area15
-.import L_Area16
-.import L_Area18
-.import L_Area19
-.import L_Area1A
-.import L_Area1B
-.import L_Area22
-.import L_Area27
-.import L_Area28
-.import L_Area2B
-.import L_Area2A
-.import MRetainerCHRWorld5
-.import MRetainerCHRWorld6
-.import MRetainerCHRWorld7
+WriteNameToVictoryMsg      = $c858
+UnusedAttribData           = $c876
+FinalRoomPalette           = $c87f
+ThankYouMessageFinal       = $c893
+PeaceIsPavedMsg            = $c8ab
+WithKingdomSavedMsg        = $c8c1
+HurrahMsg                  = $c8d7
+OurOnlyHeroMsg             = $c8eb
+ThisEndsYourTripMsg        = $c8fc
+OfALongFriendshipMsg       = $c913
+PointsAddedMsg             = $c92b
+ForEachPlayerLeftMsg       = $c943
+PrincessPeachsRoom         = $c95c
+FantasyWorld9Msg           = $c97d
+SuperPlayerMsg             = $c9c0
+ANNEndingPalette           = $c9c1
+HardWorldJumpSpringHandler = $c9c2
+HardWorldEnemyGfxHandler   = $c9c3
 
-; exports to other files
-.export SoundEngineJSRCode
-.export MoveSpritesOffscreen
-.export FreqRegLookupTbl
-.export NextWorld
-.export WriteTopStatusLine
-.export WriteBottomStatusLine
-.export GetAreaPalette
-.export GetBackgroundColor
-.export EndAreaPoints
-.export JumpEngine
-.export Square2SfxHandler
-.export PrintStatusBarNumbers
-.export DiskIDString
-.export EnemyGfxHandler
-.export SoundEngine
-.export DiskScreen
-.export WaitForEject
-.export WaitForReinsert
-.export ResetDiskVars
-.export DiskErrorHandler
-.export AttractModeSubs
-.export InitScreenPalette
-; sm2data4
-.export HalfwayPageNybbles
-.export GetPipeHeight
-.export FindEmptyEnemySlot
-.export SetupPiranhaPlant
-.export VerticalPipeData
-.export RenderUnderPart
-.export MetatileBuffer
-.export GetAreaType
-.export E_HArea10
-.export E_HArea11
-.export L_HArea10
-.export L_HArea11
+E_Area04 = $c264
+E_Area05 = $c265
+E_Area06 = $c266
+E_Area07 = $c267
+E_Area09 = $c269
+E_Area0B = $c26b
+E_Area12 = $c272
+E_Area15 = $c275
+E_Area16 = $c276
+E_Area18 = $c278
+E_Area19 = $c279
+E_Area1A = $c27a
+E_Area1B = $c27b
+E_Area1E = $c27e
+E_Area1F = $c27f
+E_Area21 = $c281
+E_Area22 = $c282
+E_Area27 = $c287
+E_Area28 = $c288
+E_Area2A = $c28a
+E_Area2B = $c28b
+
+L_Area04 = $c294
+L_Area05 = $c295
+L_Area06 = $c296
+L_Area07 = $c297
+L_Area09 = $c299
+L_Area0B = $c29b
+L_Area12 = $c2a2
+L_Area15 = $c2a5
+L_Area16 = $c2a6
+L_Area18 = $c2a8
+L_Area19 = $c2a9
+L_Area1A = $c2aa
+L_Area1B = $c2ab
+L_Area1E = $c2ae
+L_Area1F = $c2af
+L_Area21 = $c2b1
+L_Area22 = $c2b2
+L_Area27 = $c2b7
+L_Area28 = $c2b8
+L_Area2A = $c2ba
+L_Area2B = $c2bb
+
+MRetainerCHRWorld5 = $c2c4
+MRetainerCHRWorld6 = $c2c5
+MRetainerCHRWorld7 = $c2c6
+
+.base $6000
 
 ;-------------------------------------------------------------------------------------
 
@@ -1201,13 +1168,13 @@ VictoryModeSubsForW8:
 ;-------------------------------------------------------------------------------------
 
 MRetainerData:
-.addr MRetainerCHRWorld1
-.addr MRetainerCHRWorld2
-.addr MRetainerCHRWorld3
-.addr MRetainerCHRWorld4
-.addr MRetainerCHRWorld5
-.addr MRetainerCHRWorld6
-.addr MRetainerCHRWorld7
+.dw MRetainerCHRWorld1
+.dw MRetainerCHRWorld2
+.dw MRetainerCHRWorld3
+.dw MRetainerCHRWorld4
+.dw MRetainerCHRWorld5
+.dw MRetainerCHRWorld6
+.dw MRetainerCHRWorld7
 
 ; overwrites CHR CD0-CFF, 7A0-7BF and EE0-EEF
 MRetainerPPUOffsetHi:
@@ -1256,10 +1223,10 @@ LoadWorldMushroomRetainer:
       jmp IncModeTask                ; yes - move on to next task
 
 MushroomRetainerPalettes:
-.addr MushroomRetainerPal0
-.addr MushroomRetainerPal1
-.addr MushroomRetainerPal2
-.addr MushroomRetainerPal3
+.dw MushroomRetainerPal0
+.dw MushroomRetainerPal1
+.dw MushroomRetainerPal2
+.dw MushroomRetainerPal3
 
 WMushroomRetainerOffsets:
 .byte $04,$02,$00,$04,$02,$00,$08
@@ -14710,23 +14677,23 @@ EnemyAddrHOffsets:
   .byte $28, $08, $24, $00
 
 EnemyDataAddrs:
-.addr E_Area00, E_Area01, E_Area02, E_Area03, E_Area04, E_Area05, E_Area06, E_Area07
-.addr E_Area08, E_Area09, E_Area0A, E_Area0B, E_Area0C, E_Area0D, E_Area0E, E_Area0F
-.addr E_Area10, E_Area11, E_Area12, E_Area13, E_Area14, E_Area15, E_Area16, E_Area17
-.addr E_Area18, E_Area19, E_Area1A, E_Area1B, E_Area1C, E_Area1D, E_Area1E, E_Area1F
-.addr E_Area20, E_Area21, E_Area22, E_Area23, E_Area24, E_Area25, E_Area26, E_Area27
-.addr E_Area28, E_Area29, E_Area2A, E_Area2B, E_Area2C
+.dw E_Area00, E_Area01, E_Area02, E_Area03, E_Area04, E_Area05, E_Area06, E_Area07
+.dw E_Area08, E_Area09, E_Area0A, E_Area0B, E_Area0C, E_Area0D, E_Area0E, E_Area0F
+.dw E_Area10, E_Area11, E_Area12, E_Area13, E_Area14, E_Area15, E_Area16, E_Area17
+.dw E_Area18, E_Area19, E_Area1A, E_Area1B, E_Area1C, E_Area1D, E_Area1E, E_Area1F
+.dw E_Area20, E_Area21, E_Area22, E_Area23, E_Area24, E_Area25, E_Area26, E_Area27
+.dw E_Area28, E_Area29, E_Area2A, E_Area2B, E_Area2C
 
 AreaDataHOffsets:
   .byte $28, $08, $24, $00
 
 AreaDataAddrs:
-.addr L_Area00, L_Area01, L_Area02, L_Area03, L_Area04, L_Area05, L_Area06, L_Area07
-.addr L_Area08, L_Area09, L_Area0A, L_Area0B, L_Area0C, L_Area0D, L_Area0E, L_Area0F
-.addr L_Area10, L_Area11, L_Area12, L_Area13, L_Area14, L_Area15, L_Area16, L_Area17
-.addr L_Area18, L_Area19, L_Area1A, L_Area1B, L_Area1C, L_Area1D, L_Area1E, L_Area1F
-.addr L_Area20, L_Area21, L_Area22, L_Area23, L_Area24, L_Area25, L_Area26, L_Area27
-.addr L_Area28, L_Area29, L_Area2A, L_Area2B, L_Area2C
+.dw L_Area00, L_Area01, L_Area02, L_Area03, L_Area04, L_Area05, L_Area06, L_Area07
+.dw L_Area08, L_Area09, L_Area0A, L_Area0B, L_Area0C, L_Area0D, L_Area0E, L_Area0F
+.dw L_Area10, L_Area11, L_Area12, L_Area13, L_Area14, L_Area15, L_Area16, L_Area17
+.dw L_Area18, L_Area19, L_Area1A, L_Area1B, L_Area1C, L_Area1D, L_Area1E, L_Area1F
+.dw L_Area20, L_Area21, L_Area22, L_Area23, L_Area24, L_Area25, L_Area26, L_Area27
+.dw L_Area28, L_Area29, L_Area2A, L_Area2B, L_Area2C
 
 GameMenuRoutine:
               lda SavedJoypadBits         ;check to see if the player pressed start
@@ -16582,7 +16549,6 @@ BrickShatterEnvData:
       .byte $15, $16, $16, $17, $17, $18, $19, $19
       .byte $1a, $1a, $1c, $1d, $1d, $1e, $1e, $1f
 
-.res $DFFA - *, $FF
         .word NMIHandler
         .word Start
         .word IRQHandler

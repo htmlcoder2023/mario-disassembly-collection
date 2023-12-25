@@ -36,59 +36,13 @@ NoiseSoundQueue       = $fd
 MetatileBuffer        = $06a1
 
 ; import from other files
-.import GetPipeHeight
-.import FindEmptyEnemySlot
-.import SetupPiranhaPlant
-.import VerticalPipeData
-.import RenderUnderPart
-; export to other files
-.export E_Area06
-.export E_Area07
-.export E_Area04
-.export E_Area05
-.export E_Area09
-.export E_Area0B
-.export E_Area1E
-.export E_Area1F
-.export E_Area12
-.export E_Area21
-.export E_Area15
-.export E_Area16
-.export E_Area18
-.export E_Area19
-.export E_Area1A
-.export E_Area1B
-.export E_Area22
-.export E_Area27
-.export E_Area28
-.export E_Area2B
-.export E_Area2A
-.export L_Area06
-.export L_Area07
-.export L_Area04
-.export L_Area05
-.export L_Area09
-.export L_Area0B
-.export L_Area1E
-.export L_Area1F
-.export L_Area12
-.export L_Area21
-.export L_Area15
-.export L_Area16
-.export L_Area18
-.export L_Area19
-.export L_Area1A
-.export L_Area1B
-.export L_Area22
-.export L_Area27
-.export L_Area28
-.export L_Area2B
-.export L_Area2A
-.export MRetainerCHRWorld5
-.export MRetainerCHRWorld6
-.export MRetainerCHRWorld7
-.export HardWorldJumpSpringHandler
-.export HardWorldEnemyGfxHandler
+GetPipeHeight      = $7761
+FindEmptyEnemySlot = $7791
+SetupPiranhaPlant  = $7772
+VerticalPipeData   = $7729
+RenderUnderPart    = $79c6
+
+.base $c470
 
 ;-------------------------------------------------------------------------------------------------
 ;$06 - used to store vertical length of pipe

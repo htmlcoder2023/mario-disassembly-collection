@@ -57,24 +57,22 @@ WorldNumber           = $075f
 AreaNumber            = $0760 ;internal number used to find areas
 
 ; imports from other files
-.import HalfwayPageNybbles
-.import GetPipeHeight
-.import FindEmptyEnemySlot
-.import SetupPiranhaPlant
-.import VerticalPipeData
-.import RenderUnderPart
-.import MetatileBuffer
-.import GetAreaType
-.import E_HArea10
-.import E_HArea11
-.import L_HArea10
-.import L_HArea11
+HalfwayPageNybbles = $6ffd
+GetPipeHeight      = $7761
+FindEmptyEnemySlot = $7791
+SetupPiranhaPlant  = $7772
+VerticalPipeData   = $7729
+RenderUnderPart    = $79c6
+MetatileBuffer     = $06a1
+GetAreaType        = $c2aa
 
-; exports to other files
-.export UpsideDownPipe_High
-.export UpsideDownPipe_Low
-.export MoveUpsideDownPiranhaP
-.export ChangeHalfwayPages
+E_HArea10 = $c270
+E_HArea11 = $c271
+
+L_HArea10 = $c2a0
+L_HArea11 = $c2a1
+
+.base $c296
 
 ;-------------------------------------------------------------------------------------------------
 
@@ -184,17 +182,17 @@ EnemyAddrHOffsets:
      .byte $14, $04, $12, $00
 
 EnemyDataAddrs:
-     .addr E_HArea00,E_HArea01,E_HArea02,E_HArea03,E_HArea04,E_HArea05,E_HArea06,E_HArea07
-     .addr E_HArea08,E_HArea09,E_HArea0A,E_HArea0B,E_HArea0C,E_HArea0D,E_HArea0E,E_HArea0F
-     .addr E_HArea10,E_HArea11,E_HArea12,E_HArea13,E_HArea14
+     .dw E_HArea00,E_HArea01,E_HArea02,E_HArea03,E_HArea04,E_HArea05,E_HArea06,E_HArea07
+     .dw E_HArea08,E_HArea09,E_HArea0A,E_HArea0B,E_HArea0C,E_HArea0D,E_HArea0E,E_HArea0F
+     .dw E_HArea10,E_HArea11,E_HArea12,E_HArea13,E_HArea14
 
 AreaDataHOffsets:
      .byte $14, $04, $12, $00
 
 AreaDataAddrs:
-     .addr L_HArea00,L_HArea01,L_HArea02,L_HArea03,L_HArea04,L_HArea05,L_HArea06,L_HArea07
-     .addr L_HArea08,L_HArea09,L_HArea0A,L_HArea0B,L_HArea0C,L_HArea0D,L_HArea0E,L_HArea0F
-     .addr L_HArea10,L_HArea11,L_HArea12,L_HArea13,L_HArea14
+     .dw L_HArea00,L_HArea01,L_HArea02,L_HArea03,L_HArea04,L_HArea05,L_HArea06,L_HArea07
+     .dw L_HArea08,L_HArea09,L_HArea0A,L_HArea0B,L_HArea0C,L_HArea0D,L_HArea0E,L_HArea0F
+     .dw L_HArea10,L_HArea11,L_HArea12,L_HArea13,L_HArea14
 
 AtoDHalfwayPages:
      .byte $76, $50

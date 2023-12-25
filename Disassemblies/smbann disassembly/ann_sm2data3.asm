@@ -156,51 +156,36 @@ Sfx_CoinGrab           = %00000001
 VictoryMusic           = %00000100
 
 ; imports from other files
-.import MoveSpritesOffscreen
-.import FreqRegLookupTbl
-.import NextWorld
-.import WriteTopStatusLine
-.import WriteBottomStatusLine
-.import GetAreaPalette
-.import GetBackgroundColor
-.import EndAreaPoints
-.import JumpEngine
-.import Square2SfxHandler
-.import PrintStatusBarNumbers
-.import DiskIDString
-.import EnemyGfxHandler
-.import SoundEngine
-.import DiskScreen
-.import WaitForEject
-.import WaitForReinsert
-.import ResetDiskVars
-.import DiskErrorHandler
-.import AttractModeSubs
-.import SoundEngineJSRCode
-.import InitScreenPalette
+MoveSpritesOffscreen   = $628a
+SoundEngineJSRCode     = $611d
+FreqRegLookupTbl       = $df00
+NextWorld              = $63d7
+InitScreenPalette      = $64f6
+WriteTopStatusLine     = $65a7
+WriteBottomStatusLine  = $65af
+GetAreaPalette         = $651f
+GetBackgroundColor     = $653f
+EndAreaPoints          = $9f70
+JumpEngine             = $6c7d
+Square2SfxHandler      = $d54c
+PrintStatusBarNumbers  = $6d79
+FDSBIOS_WRITEFILE      = $e239
+Sfx_ExtraLife          = %01000000
+Sfx_CoinGrab           = %00000001
+VictoryMusic           = %00000100
+DiskIDString           = $c0d2
+EnemyGfxHandler        = $b52c
+SoundEngine            = $d2a0
+SoundEngineVector      = $611d
+DiskScreen             = $c113
+WaitForEject           = $c126
+WaitForReinsert        = $c138
+ResetDiskVars          = $c140
+DiskErrorHandler       = $c182
+AttractModeSubs        = $bfb0
 
-; exports to other files
-.export EraseLivesLines
-.export RunMushroomRetainers
-.export EndingDiskRoutines
-.export AwardExtraLives
-.export PrintVictoryMsgsForWorld8
-.export FadeToBlue
-.export ScreenSubsForFinalRoom
-.export WriteNameToVictoryMsg
-.export UnusedAttribData
-.export FinalRoomPalette
-.export ThankYouMessageFinal
-.export PeaceIsPavedMsg
-.export WithKingdomSavedMsg
-.export HurrahMsg
-.export OurOnlyHeroMsg
-.export ThisEndsYourTripMsg
-.export OfALongFriendshipMsg
-.export PointsAddedMsg
-.export ForEachPlayerLeftMsg
-.export PrincessPeachsRoom
-.export ANNEndingPalette
+ .base $c5d0
+ fillvalue $ff
 
 ;-------------------------------------------------------------------------------------
 
