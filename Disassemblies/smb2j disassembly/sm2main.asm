@@ -14481,27 +14481,6 @@ MPhyLoop:
 
 ;-------------------------------------------------------------------------------------
 
-;enemy data used by pipe intro area, warp zone area and exit area
-E_GroundArea10:
-E_GroundArea21:
-E_GroundArea28:
-  .db $ff
-
-;exit area used in levels 1-2, 3-2, 5-2, 6-2, A-2 and B-2
-L_GroundArea28:
-  .db $90, $31, $39, $f1, $bf, $37, $33, $e7, $a3, $03, $a7, $03, $cd, $41, $0f, $a6
-  .db $ed, $47, $fd
-
-;pipe intro area
-L_GroundArea10:
-  .db $38, $11, $0f, $26, $ad, $40, $3d, $c7, $fd
-
-;warp zone area used in levels 1-2 and 5-2
-L_GroundArea21:
-  .db $10, $00, $0b, $13, $5b, $14, $6a, $42, $c7, $12, $c6, $42, $1b, $94, $2a, $42
-  .db $53, $13, $62, $41, $97, $17, $a6, $45, $6e, $81, $8f, $37, $02, $e8, $12, $3a
-  .db $68, $7a, $de, $0f, $6d, $c5, $fd
-
 LoadAreaPointer:
              jsr FindAreaPointer  ;find it and store it here
              sta AreaPointer
@@ -15011,6 +14990,12 @@ E_GroundArea11:
 E_GroundArea20:
   .db $0a, $aa, $1e, $22, $29, $1e, $25, $49, $2e, $27, $66, $ff
 
+;enemy data used by pipe intro area, warp zone area and exit area
+E_GroundArea10:
+E_GroundArea21:
+E_GroundArea28:
+  .db $ff
+
 ;level 1-2
 E_UndergroundArea1:
   .db $0a, $8e, $de, $b4, $00, $e0, $37, $5b, $82, $2b, $a9, $aa, $29, $29, $a9, $a8
@@ -15170,6 +15155,10 @@ L_GroundArea9:
   .db $e6, $60, $26, $e0, $4a, $30, $53, $31, $5c, $58, $ed, $41, $2f, $a6, $1d, $c7
   .db $fd
 
+;pipe intro area
+L_GroundArea10:
+  .db $38, $11, $0f, $26, $ad, $40, $3d, $c7, $fd
+
 ;level 4-3
 L_GroundArea11:
   .db $50, $11, $0f, $26, $fe, $10, $8b, $93, $a9, $0f, $14, $c1, $cc, $16, $cf, $11
@@ -15182,6 +15171,17 @@ L_GroundArea11:
 L_GroundArea20:
   .db $00, $c1, $4c, $00, $03, $cf, $00, $d7, $23, $4d, $07, $af, $2a, $4c, $03, $cf
   .db $3e, $80, $f3, $4a, $bb, $c2, $bd, $c7, $fd
+
+;warp zone area used in levels 1-2 and 5-2
+L_GroundArea21:
+  .db $10, $00, $0b, $13, $5b, $14, $6a, $42, $c7, $12, $c6, $42, $1b, $94, $2a, $42
+  .db $53, $13, $62, $41, $97, $17, $a6, $45, $6e, $81, $8f, $37, $02, $e8, $12, $3a
+  .db $68, $7a, $de, $0f, $6d, $c5, $fd
+
+;exit area used in levels 1-2, 3-2, 5-2, 6-2, A-2 and B-2
+L_GroundArea28:
+  .db $90, $31, $39, $f1, $bf, $37, $33, $e7, $a3, $03, $a7, $03, $cd, $41, $0f, $a6
+  .db $ed, $47, $fd
 
 ;level 1-2
 L_UndergroundArea1:
