@@ -3,30 +3,16 @@ A collection of Super Mario game disassemblies.
 
 Credits:
 
-Doppelganger - smb1 + smb2j disassembly
+1. Doppelganger
+   a. Super Mario Bros. (NTSC)
+   b. Super Mario Bros. 2 (Japan)
 
-MrWint - smb1 PAL disassembly
+2. MrWint
+   a. Super Mario Bros. (PAL)
 
-Xkeeper0 - smb2 disassembly
+3. Threecreepio
+   a. All Night Nippon: Super Mario Bros. (Japan)
 
-Captainsouthbird - smb3 disassembly
-
-Kaspermeerts - Super Mario Land disassembly
-
-IsoFrieze - smw disassembly
-
-Froggestspirit - Super Mario Land: 6 Golden Coins disassembly
-
-n64decomp - sm64 disassembly
-
-Threecreepio - smbann disassembly
-
-Bonimy - smas disassembly
-
-KarisaAdvynia - smbdx disassembly + modified sma2 disassembly + sma3 disassembly + sma4 disassembly
-
-Atasro2 - sma2 disassembly
-
-Jakiki6 - modified smb1 disassembly
-
-Fortenbt - modified smb3 disassembly
+4. Xkeeper0
+   a. Super Mario Bros. 2 (USA)
+   b. Super Mario USA
