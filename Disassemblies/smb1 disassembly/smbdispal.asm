@@ -16327,4 +16327,4 @@ BrickShatterEnvData:
       .dw Start
       .dw $fff0  ;unused
 
-.incbin "smb_chr.chr"
+.incbin "smb.chr"
