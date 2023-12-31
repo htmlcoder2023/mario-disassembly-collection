@@ -1,4 +1,4 @@
-1. Super Mario Bros.:
+1. Super Mario Bros.
    
    a. NTSC version (included, original disassembly 11/9/2012)
    
@@ -12,9 +12,9 @@
    
    f. Nintendo World Championships 1990 (not included)
    
-2. Super Mario Bros. 2 (Japan)
+2. Super Mario Bros. 2 (Japan) (included, original disassembly 4/20/2013)
    
-3. All Night Nippon: Super Mario Bros (FDS)
+3. All Night Nippon: Super Mario Bros (FDS) (included, original disassembly 10/7/2022)
    
 4. Super Mario Bros. 2 (NES)
    
