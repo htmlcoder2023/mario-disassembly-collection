@@ -11,111 +11,123 @@ PRG = 0
 CHR = 1
 VRAM = 2
 
-.base 0
-
 ;FWNES header
-;.db "FDS",$1a,1,0,0,0,0,0,0,0,0,0,0,0
+;.byte "FDS",$1a,1,0,0,0,0,0,0,0,0,0,0,0
 
-.db DiskInfoBlock
-.db "*NINTENDO-HVC*"
-.db $01,"NSM ",0,0,0,0,0,$0f
-.db $ff,$ff,$ff,$ff,$ff
-.db $61,$12,$13
-.db $49,$61,$00,$00,$02,$06,$9a,$05,$25,$01
-.db $61,$12,$13
-.db $ff,$ff,$ff,$ff,$ff,$00,$00,$00,$00
+.byte DiskInfoBlock
+.byte "*NINTENDO-HVC*"
+.byte $01,"NSM ",0,0,0,0,0,$0f
+.byte $ff,$ff,$ff,$ff,$ff
+.byte $61,$12,$13
+.byte $49,$61,$00,$00,$02,$06,$9a,$05,$25,$01
+.byte $61,$12,$13
+.byte $ff,$ff,$ff,$ff,$ff,$00,$00,$00,$00
 
-.db FileAmountBlock
-.db 8
+.byte FileAmountBlock
+.byte 8
 
-.db FileHeaderBlock
-.db $00,$00
-.db "KYODAKU-"
-.dw $2800
-.dw KyodakuEnd-KyodakuStart
-.db VRAM
+.byte FileHeaderBlock
+.byte $00,$00
+.byte "KYODAKU-"
+.word $2800
+.word KyodakuEnd-KyodakuStart
+.byte VRAM
 
-.db FileDataBlock
+.byte FileDataBlock
 KyodakuStart:
-.db $24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$17,$12,$17,$1d,$0e
-.db $17,$0d,$18,$24,$28,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24
-.db $24,$24,$24,$24,$24,$24,$24,$0f,$0a,$16,$12,$15,$22,$24,$0c,$18
-.db $16,$19,$1e,$1d,$0e,$1b,$24,$1d,$16,$24,$24,$24,$24,$24,$24,$24
-.db $24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24
-.db $24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24
-.db $24,$24,$1d,$11,$12,$1c,$24,$19,$1b,$18,$0d,$1e,$0c,$1d,$24,$12
-.db $1c,$24,$16,$0a,$17,$1e,$0f,$0a,$0c,$1d,$1e,$1b,$0e,$0d,$24,$24
-.db $24,$24,$0a,$17,$0d,$24,$1c,$18,$15,$0d,$24,$0b,$22,$24,$17,$12
-.db $17,$1d,$0e,$17,$0d,$18,$24,$0c,$18,$27,$15,$1d,$0d,$26,$24,$24
-.db $24,$24,$18,$1b,$24,$0b,$22,$24,$18,$1d,$11,$0e,$1b,$24,$0c,$18
-.db $16,$19,$0a,$17,$22,$24,$1e,$17,$0d,$0e,$1b,$24,$24,$24,$24,$24
-.db $24,$24,$15,$12,$0c,$0e,$17,$1c,$0e,$24,$18,$0f,$24,$17,$12,$17
-.db $1d,$0e,$17,$0d,$18,$24,$0c,$18,$27,$15,$1d,$0d,$26,$26,$24,$24
+.byte $24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$17,$12,$17,$1d,$0e
+.byte $17,$0d,$18,$24,$28,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24
+.byte $24,$24,$24,$24,$24,$24,$24,$0f,$0a,$16,$12,$15,$22,$24,$0c,$18
+.byte $16,$19,$1e,$1d,$0e,$1b,$24,$1d,$16,$24,$24,$24,$24,$24,$24,$24
+.byte $24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24
+.byte $24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24
+.byte $24,$24,$1d,$11,$12,$1c,$24,$19,$1b,$18,$0d,$1e,$0c,$1d,$24,$12
+.byte $1c,$24,$16,$0a,$17,$1e,$0f,$0a,$0c,$1d,$1e,$1b,$0e,$0d,$24,$24
+.byte $24,$24,$0a,$17,$0d,$24,$1c,$18,$15,$0d,$24,$0b,$22,$24,$17,$12
+.byte $17,$1d,$0e,$17,$0d,$18,$24,$0c,$18,$27,$15,$1d,$0d,$26,$24,$24
+.byte $24,$24,$18,$1b,$24,$0b,$22,$24,$18,$1d,$11,$0e,$1b,$24,$0c,$18
+.byte $16,$19,$0a,$17,$22,$24,$1e,$17,$0d,$0e,$1b,$24,$24,$24,$24,$24
+.byte $24,$24,$15,$12,$0c,$0e,$17,$1c,$0e,$24,$18,$0f,$24,$17,$12,$17
+.byte $1d,$0e,$17,$0d,$18,$24,$0c,$18,$27,$15,$1d,$0d,$26,$26,$24,$24
 KyodakuEnd:
 
-.db FileHeaderBlock
-.db $01,$01
-.db "NSMCHAR1"
-.dw $0000
-.dw Char1End-Char1Start
-.db CHR,FileDataBlock
+.byte FileHeaderBlock
+.byte $01,$01
+.byte "NSMCHAR1"
+.word $0000
+.word Char1End-Char1Start
+.byte CHR,FileDataBlock
 Char1Start:
 .incbin "NSMCHAR1.chr"
 Char1End:
 
-.db FileHeaderBlock
-.db $02,$10
-.db "NSMCHAR2"
-.dw $0760
-.dw Char2End-Char2Start
-.db CHR,FileDataBlock
+.byte FileHeaderBlock
+.byte $02,$10
+.byte "NSMCHAR2"
+.word $0760
+.word Char2End-Char2Start
+.byte CHR,FileDataBlock
 Char2Start:
 .incbin "NSMCHAR2.chr"
 Char2End:
 
-.db FileHeaderBlock,$03,$05
-.db "NSMMAIN "
-.dw $6000, MainEnd-MainStart
-.db PRG, FileDataBlock
+.byte FileHeaderBlock,$03,$05
+.byte "SM2MAIN "
+.word $6000, MainEnd-MainStart
+.byte PRG, FileDataBlock
 MainStart:
-.incbin "ann_sm2main.bin"
+.scope FILE_SM2MAIN
+.org $6000
+.include "ann_sm2main.asm"
+.reloc
+.endscope
 MainEnd:
 
-.db FileHeaderBlock
-.db $04,$20
-.db "NSMDATA2"
-.dw $c470
-.dw Data2End-Data2Start
-.db PRG,FileDataBlock
+.byte FileHeaderBlock
+.byte $04,$20
+.byte "SM2DATA2"
+.word $c470
+.word Data2End-Data2Start
+.byte PRG,FileDataBlock
 Data2Start:
-.incbin "ann_sm2data2.bin"
+.scope FILE_SM2DATA2
+.org $C470
+.include "ann_sm2data2.asm"
+.reloc
+.endscope
 Data2End:
 
-.db FileHeaderBlock
-.db $05,$30
-.db "NSMDATA3"
-.dw $c5d0
-.dw Data3End-Data3Start
-.db PRG,FileDataBlock
+.byte FileHeaderBlock
+.byte $05,$30
+.byte "SM2DATA3"
+.word $c5d0
+.word Data3End-Data3Start
+.byte PRG,FileDataBlock
 Data3Start:
-.incbin "ann_sm2data3.bin"
+.scope FILE_SM2DATA3
+.org $C5D0
+.include "ann_sm2data3.asm"
+.reloc
+.endscope
 Data3End:
 
-.db FileHeaderBlock
-.db $06,$40
-.db "NSMDATA4"
-.dw $c296
-.dw Data4End-Data4Start
-.db PRG,FileDataBlock
+.byte FileHeaderBlock
+.byte $06,$40
+.byte "SM2DATA4"
+.word $c296
+.word Data4End-Data4Start
+.byte PRG,FileDataBlock
 Data4Start:
-.incbin "ann_sm2data4.bin"
+.scope FILE_SM2DATA4
+.org $c296
+.include "ann_sm2data4.asm"
+.reloc
+.endscope
 Data4End:
 
-.db FileHeaderBlock
-.db $07,$0f
-.db "NSMSAVE "
-.dw $d2e3, 1
-.db PRG,FileDataBlock
-.db 0
-
-.pad $ffec, 0
+.byte FileHeaderBlock
+.byte $07,$0f
+.byte "SM2SAVE "
+.word $d2e3, 1
+.byte PRG,FileDataBlock
+.byte 0

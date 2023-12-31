@@ -157,33 +157,72 @@ Sfx_CoinGrab           = %00000001
 VictoryMusic           = %00000100
 
 ; imports from other files
-MoveSpritesOffscreen   = $628a
-SoundEngineJSRCode     = $611d
-FreqRegLookupTbl       = $df00
-NextWorld              = $63d7
-InitScreenPalette      = $64f6
-WriteTopStatusLine     = $65a7
-WriteBottomStatusLine  = $65af
-GetAreaPalette         = $651f
-GetBackgroundColor     = $653f
-EndAreaPoints          = $9f70
-JumpEngine             = $6c7d
-Square2SfxHandler      = $d54c
-PrintStatusBarNumbers  = $6d79
-FDSBIOS_WRITEFILE      = $e239
-DiskIDString           = $c0d2
-EnemyGfxHandler        = $b52c
-SoundEngine            = $d2a0
-SoundEngineVector      = $611d
-DiskScreen             = $c113
-WaitForEject           = $c126
-WaitForReinsert        = $c138
-ResetDiskVars          = $c140
-DiskErrorHandler       = $c182
-AttractModeSubs        = $bfb0
+.import MoveSpritesOffscreen
+.import FreqRegLookupTbl
+.import NextWorld
+.import WriteTopStatusLine
+.import WriteBottomStatusLine
+.import GetAreaPalette
+.import GetBackgroundColor
+.import EndAreaPoints
+.import JumpEngine
+.import Square2SfxHandler
+.import PrintStatusBarNumbers
+.import DiskIDString
+.import EnemyGfxHandler
+.import SoundEngine
+.import DiskScreen
+.import WaitForEject
+.import WaitForReinsert
+.import ResetDiskVars
+.import DiskErrorHandler
+.import AttractModeSubs
+.import SoundEngineJSRCode
+.import InitScreenPalette
 
-.base $c5d0
-fillvalue $ff
+; exports to other files
+.export EraseLivesLines
+.export RunMushroomRetainers
+.export EndingDiskRoutines
+.export AwardExtraLives
+.export PrintVictoryMsgsForWorld8
+.export FadeToBlue
+.export ScreenSubsForFinalRoom
+.export WriteNameToVictoryMsg
+.export UnusedAttribData
+.export FinalRoomPalette
+.export ThankYouMessageFinal
+.export PeaceIsPavedMsg
+.export WithKingdomSavedMsg
+.export HurrahMsg
+.export OurOnlyHeroMsg
+.export ThisEndsYourTripMsg
+.export OfALongFriendshipMsg
+.export PointsAddedMsg
+.export ForEachPlayerLeftMsg
+.export PrincessPeachsRoom
+.ifdef ANN
+.export ANNEndingPalette
+.else
+.export FantasyWorld9Msg
+.export SuperPlayerMsg
+.export E_CastleArea9
+.export E_CastleArea10
+.export E_GroundArea25
+.export E_GroundArea26
+.export E_GroundArea27
+.export E_WaterArea6
+.export E_WaterArea7
+.export E_WaterArea8
+.export L_CastleArea9
+.export L_CastleArea10
+.export L_GroundArea25
+.export L_GroundArea26
+.export L_GroundArea27
+.export L_WaterArea6
+.export L_WaterArea7
+.export L_WaterArea8
+.endif
 
 ;-------------------------------------------------------------------------------------
 
@@ -215,16 +254,16 @@ ScreenSubsForFinalRoom:
     lda ScreenRoutineTask
     jsr JumpEngine
 
-    .dw InitScreenPalette
-    .dw WriteTopStatusLine
-    .dw WriteBottomStatusLine
-    .dw DrawFinalRoom
-    .dw GetAreaPalette
-    .dw GetBackgroundColor
+    .word InitScreenPalette
+    .word WriteTopStatusLine
+    .word WriteBottomStatusLine
+    .word DrawFinalRoom
+    .word GetAreaPalette
+    .word GetBackgroundColor
 .ifdef ANN
-    .dw DoANNThing
+    .word DoANNThing
 .endif
-    .dw RevealPrincess
+    .word RevealPrincess
 
 DrawFinalRoom:
     lda #$1b                   ;draw the princess's room
@@ -325,17 +364,17 @@ AwardExtraLives:
 .endif
 
 BlueTransPalette:
-    .db $3f, $00, $10
-    .db $0f, $30, $0f, $0f, $0f, $30, $10, $00, $0f, $21, $12, $21, $0f, $27, $17, $00
-    .db $00
+    .byte $3f, $00, $10
+    .byte $0f, $30, $0f, $0f, $0f, $30, $10, $00, $0f, $21, $12, $21, $0f, $27, $17, $00
+    .byte $00
 
 BlueTints:
-    .db $01, $02, $11, $21
+    .byte $01, $02, $11, $21
 
 TwoBlankRows:
-    .db $22, $86, $55, $24
-    .db $22, $a6, $55, $24
-    .db $00
+    .byte $22, $86, $55, $24
+    .byte $22, $a6, $55, $24
+    .byte $00
 
 FadeToBlue:
           inc EndControlCntr   ;increment a counter
@@ -409,33 +448,33 @@ EndingDiskRoutines:
     lda DiskIOTask
     jsr JumpEngine
 
-    .dw DiskScreen
-    .dw UpdateGamesBeaten
-    .dw WaitForEject
-    .dw WaitForReinsert
-    .dw ResetDiskVars
+    .word DiskScreen
+    .word UpdateGamesBeaten
+    .word WaitForEject
+    .word WaitForReinsert
+    .word ResetDiskVars
 
 SaveFileHeader:
-    .db $0f, "SM2SAVE "
+    .byte $0f, "SM2SAVE "
 .ifdef ANN
-    .dw $d2e3
+    .word $d2e3
 .else
-    .dw $d29f
+    .word $d29f
 .endif
 
-    .db $01, $00, $00
+    .byte $01, $00, $00
 .ifdef ANN
-    .dw $d2e3
+    .word $d2e3
 .else
-    .dw $d29f
+    .word $d29f
 .endif
-    .db $00
+    .byte $00
 
 UpdateGamesBeaten:
     lda #$07               ;set file sequential position
     jsr FDSBIOS_WRITEFILE  ;save number of games beaten to SM2SAVE
-    .dw DiskIDString
-    .dw SaveFileHeader
+    .word DiskIDString
+    .word SaveFileHeader
 
 ;execution continues here
     beq BackToNormal       ;if no error, continue
@@ -474,22 +513,22 @@ GoToWorld9:
 .endif
 
 FlashMRSpriteDataOfs:
-    .db $50, $b0, $e0, $68, $98, $c8
+    .byte $50, $b0, $e0, $68, $98, $c8
 
 MRSpriteDataOfs:
-    .db $80, $50, $68, $80, $98, $b0, $c8
+    .byte $80, $50, $68, $80, $98, $b0, $c8
 
 MRetainerYPos:
-    .db $e0, $b8, $90, $70, $68, $70, $90
+    .byte $e0, $b8, $90, $70, $68, $70, $90
 
 MRetainerXPos:
-    .db $b8, $38, $48, $60, $80, $a0, $b8, $c8
+    .byte $b8, $38, $48, $60, $80, $a0, $b8, $c8
 
 .ifdef ANN
 ANNMRetainerTiles:
-    .db $7A,$80,$86,$8C,$92,$98,$9E
+    .byte $7A,$80,$86,$8C,$92,$98,$9E
 ANNMRetainerAttr:
-    .db $02,$03,$01,$02,$03,$01,$03
+    .byte $02,$03,$01,$02,$03,$01,$03
 .endif
 
 MushroomRetainersForW8:
@@ -610,8 +649,8 @@ NextMRet:
     rts
 
 EndPlayerNameData:
-    .db $16, $0a, $1b, $12, $18
-    .db $15, $1e, $12, $10, $12
+    .byte $16, $0a, $1b, $12, $18
+    .byte $15, $1e, $12, $10, $12
 
 WriteNameToVictoryMsg:
         lda #$00
@@ -632,246 +671,246 @@ VMsgNL: lda EndPlayerNameData,x
 ;-------------------------------------------------------------------------------------
 
 UnusedAttribData:
-    .db $23, $c0, $48, $55
-    .db $23, $c2, $01, $d5
-    .db $00
+    .byte $23, $c0, $48, $55
+    .byte $23, $c2, $01, $d5
+    .byte $00
 
 FinalRoomPalette:
-    .db $3f, $00, $10
-    .db $0f, $0f, $0f, $0f, $0f, $30, $10, $00
-    .db $0f, $21, $12, $02, $0f, $27, $17, $00
-    .db $00
+    .byte $3f, $00, $10
+    .byte $0f, $0f, $0f, $0f, $0f, $30, $10, $00
+    .byte $0f, $21, $12, $02, $0f, $27, $17, $00
+    .byte $00
 
 ThankYouMessageFinal:
-    .db $20, $e8, $10
-    .db $1d, $11, $0a, $17, $14, $24, $22, $18, $1e, $24
-    .db $16, $0a, $1b, $12, $18, $2b
+    .byte $20, $e8, $10
+    .byte $1d, $11, $0a, $17, $14, $24, $22, $18, $1e, $24
+    .byte $16, $0a, $1b, $12, $18, $2b
 
-    .db $23, $c8, $48, $05
-    .db $00
+    .byte $23, $c8, $48, $05
+    .byte $00
 
 PeaceIsPavedMsg:
-    .db $21, $09, $0e
-    .db $19, $0e, $0a, $0c, $0e, $24, $12, $1c, $24
-    .db $19, $0a, $1f, $0e, $0d
-    .db $23, $d0, $58, $aa
-    .db $00
+    .byte $21, $09, $0e
+    .byte $19, $0e, $0a, $0c, $0e, $24, $12, $1c, $24
+    .byte $19, $0a, $1f, $0e, $0d
+    .byte $23, $d0, $58, $aa
+    .byte $00
 
 WithKingdomSavedMsg:
-    .db $21, $47, $12
-    .db $20, $12, $1d, $11, $24, $14, $12, $17, $10, $0d, $18, $16, $24
-    .db $1c, $0a, $1f, $0e, $0d
-    .db $00
+    .byte $21, $47, $12
+    .byte $20, $12, $1d, $11, $24, $14, $12, $17, $10, $0d, $18, $16, $24
+    .byte $1c, $0a, $1f, $0e, $0d
+    .byte $00
 
 HurrahMsg:
-    .db $21, $89, $10
-    .db $11, $1e, $1b, $1b, $0a, $11, $24, $1d, $18, $24, $24, $16, $0a
-    .db $1b, $12, $18
-    .db $00
+    .byte $21, $89, $10
+    .byte $11, $1e, $1b, $1b, $0a, $11, $24, $1d, $18, $24, $24, $16, $0a
+    .byte $1b, $12, $18
+    .byte $00
 
 OurOnlyHeroMsg:
-    .db $21, $ca, $0d
-    .db $18, $1e, $1b, $24, $18, $17, $15, $22, $24, $11, $0e, $1b, $18
-    .db $00
+    .byte $21, $ca, $0d
+    .byte $18, $1e, $1b, $24, $18, $17, $15, $22, $24, $11, $0e, $1b, $18
+    .byte $00
 
 ThisEndsYourTripMsg:
-    .db $22, $07, $13
-    .db $1d, $11, $12, $1c, $24, $0e, $17, $0d, $1c, $24, $22, $18, $1e
-    .db $1b, $24, $1d, $1b, $12, $19
-    .db $00
+    .byte $22, $07, $13
+    .byte $1d, $11, $12, $1c, $24, $0e, $17, $0d, $1c, $24, $22, $18, $1e
+    .byte $1b, $24, $1d, $1b, $12, $19
+    .byte $00
 
 OfALongFriendshipMsg:
-    .db $22, $46, $14
-    .db $18, $0f, $24, $0a, $24, $15, $18, $17, $10, $24, $0f, $1b, $12
-    .db $0e, $17, $0d, $1c, $11, $12, $19
-    .db $00
+    .byte $22, $46, $14
+    .byte $18, $0f, $24, $0a, $24, $15, $18, $17, $10, $24, $0f, $1b, $12
+    .byte $0e, $17, $0d, $1c, $11, $12, $19
+    .byte $00
 
 PointsAddedMsg:
-    .db $22, $88, $10
-    .db $01, $00, $00, $00, $00, $00, $24, $19, $1d, $1c, $af, $0a, $0d
-    .db $0d, $0e, $0d
+    .byte $22, $88, $10
+    .byte $01, $00, $00, $00, $00, $00, $24, $19, $1d, $1c, $af, $0a, $0d
+    .byte $0d, $0e, $0d
 
-    .db $23, $e8, $48, $ff
-    .db $00
+    .byte $23, $e8, $48, $ff
+    .byte $00
     
 ForEachPlayerLeftMsg:
-    .db $22, $a6, $15
-    .db $0f, $18, $1b, $24, $0e, $0a, $0c, $11, $24, $19, $15, $0a, $22
-    .db $0e, $1b, $24, $15, $0e, $0f, $1d, $af
-    .db $00
+    .byte $22, $a6, $15
+    .byte $0f, $18, $1b, $24, $0e, $0a, $0c, $11, $24, $19, $15, $0a, $22
+    .byte $0e, $1b, $24, $15, $0e, $0f, $1d, $af
+    .byte $00
 
 .ifdef ANN
 ANNEndingPalette:
-.db $3F,$14,$0C
-.db $0F,$12,$30,$36,$0F,$36
-.db $30,$16,$0F,$36,$30,$1A
-.db $00
+.byte $3F,$14,$0C
+.byte $0F,$12,$30,$36,$0F,$36
+.byte $30,$16,$0F,$36,$30,$1A
+.byte $00
 .endif
 
 PrincessPeachsRoom:
-    .db $20, $80, $60, $5e
-    .db $20, $a0, $60, $5d
-    .db $23, $40, $60, $5e
-    .db $23, $60, $60, $5d
-    .db $23, $80, $60, $5e
-    .db $23, $a0, $60, $5d
-    .db $23, $c0, $50, $55
-    .db $23, $f0, $50, $55
-    .db $00
+    .byte $20, $80, $60, $5e
+    .byte $20, $a0, $60, $5d
+    .byte $23, $40, $60, $5e
+    .byte $23, $60, $60, $5d
+    .byte $23, $80, $60, $5e
+    .byte $23, $a0, $60, $5d
+    .byte $23, $c0, $50, $55
+    .byte $23, $f0, $50, $55
+    .byte $00
 
 .ifdef ANN
 ;; unused bytes
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-.db $FF,$FF,$FF,$FF,$FF            
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+.byte $FF,$FF,$FF,$FF,$FF            
 .else
 FantasyWorld9Msg:
-    .db $22, $24, $18
-    .db $20, $0e, $24, $19, $1b, $0e, $1c, $0e, $17, $1d, $24, $0f, $0a
-    .db $17, $1d, $0a, $1c, $22, $24, $20, $18, $1b, $15, $0d
+    .byte $22, $24, $18
+    .byte $20, $0e, $24, $19, $1b, $0e, $1c, $0e, $17, $1d, $24, $0f, $0a
+    .byte $17, $1d, $0a, $1c, $22, $24, $20, $18, $1b, $15, $0d
 
-    .db $22, $66, $13
-    .db $15, $0e, $1d, $f2, $1c, $24, $1d, $1b, $22, $24, $76, $09, $24
-    .db $20, $18, $1b, $15, $0d, $75
+    .byte $22, $66, $13
+    .byte $15, $0e, $1d, $f2, $1c, $24, $1d, $1b, $22, $24, $76, $09, $24
+    .byte $20, $18, $1b, $15, $0d, $75
 
-    .db $22, $a9, $0e
-    .db $20, $12, $1d, $11, $24, $18, $17, $0e, $24, $10, $0a, $16, $0e
-    .db $af
-    .db $00
+    .byte $22, $a9, $0e
+    .byte $20, $12, $1d, $11, $24, $18, $17, $0e, $24, $10, $0a, $16, $0e
+    .byte $af
+    .byte $00
 
 SuperPlayerMsg:
-    .db $21, $e0, $60, $24
-    .db $22, $40, $60, $24
-    .db $22, $25, $16
-    .db $22, $18, $1e, $f2, $1b, $0e, $24, $0a, $24, $1c, $1e, $19, $0e
-    .db $1b, $24, $19, $15, $0a, $22, $0e, $1b, $2b
-    .db $22, $69, $0d
-    .db $20, $0e, $24, $11, $18, $19, $0e, $24, $20, $0e, $f2, $15, $15
-    .db $22, $a9, $0e
-    .db $1c, $0e, $0e, $24, $22, $18, $1e, $24, $0a, $10, $0a, $12, $17
-    .db $af
-    .db $22, $e8, $10
-    .db $16, $0a, $1b, $12, $18, $24, $0a, $17, $0d, $24, $1c, $1d, $0a
-    .db $0f, $0f, $af
-    .db $00
+    .byte $21, $e0, $60, $24
+    .byte $22, $40, $60, $24
+    .byte $22, $25, $16
+    .byte $22, $18, $1e, $f2, $1b, $0e, $24, $0a, $24, $1c, $1e, $19, $0e
+    .byte $1b, $24, $19, $15, $0a, $22, $0e, $1b, $2b
+    .byte $22, $69, $0d
+    .byte $20, $0e, $24, $11, $18, $19, $0e, $24, $20, $0e, $f2, $15, $15
+    .byte $22, $a9, $0e
+    .byte $1c, $0e, $0e, $24, $22, $18, $1e, $24, $0a, $10, $0a, $12, $17
+    .byte $af
+    .byte $22, $e8, $10
+    .byte $16, $0a, $1b, $12, $18, $24, $0a, $17, $0d, $24, $1c, $1d, $0a
+    .byte $0f, $0f, $af
+    .byte $00
 
 ;-------------------------------------------------------------------------------------
 
 ; unused space
-.db $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
-.db $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
-.db $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
-.db $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
-.db $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
-.db $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
-.db $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
+.byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
+.byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
+.byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
+.byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
+.byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
+.byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
+.byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
 
 ;level 9-3
 E_CastleArea9:
-    .db $1f, $01, $0e, $69, $00, $1f, $0b, $78, $2d, $ff
+    .byte $1f, $01, $0e, $69, $00, $1f, $0b, $78, $2d, $ff
 
 ;cloud level used in level 9-3
 E_CastleArea10:
-    .db $1f, $01, $1e, $68, $06, $ff
+    .byte $1f, $01, $1e, $68, $06, $ff
 
 ;level 9-1 starting area
 E_GroundArea25:
-    .db $1e, $05, $00, $ff
+    .byte $1e, $05, $00, $ff
 
 ;two unused levels that have the same enemy data address as a used level
 E_GroundArea26:
@@ -879,77 +918,77 @@ E_GroundArea27:
 
 ;level 9-1 water area
 E_WaterArea6:
-    .db $26, $8f, $05, $ac, $46, $0f, $1f, $04, $e8, $10, $38, $90, $66, $11, $fb, $3c
-    .db $9b, $b7, $cb, $85, $29, $87, $95, $07, $eb, $02, $0b, $82, $96, $0e, $c3, $0e
-    .db $ff
+    .byte $26, $8f, $05, $ac, $46, $0f, $1f, $04, $e8, $10, $38, $90, $66, $11, $fb, $3c
+    .byte $9b, $b7, $cb, $85, $29, $87, $95, $07, $eb, $02, $0b, $82, $96, $0e, $c3, $0e
+    .byte $ff
 
 ;level 9-2
 E_WaterArea7:
-    .db $1f, $01, $e6, $11, $ff
+    .byte $1f, $01, $e6, $11, $ff
 
 ;level 9-4
 E_WaterArea8:
-    .db $3b, $86, $7b, $00, $bb, $02, $2b, $8e, $7a, $05, $57, $87, $27, $8f, $9a, $0c
-    .db $ff
+    .byte $3b, $86, $7b, $00, $bb, $02, $2b, $8e, $7a, $05, $57, $87, $27, $8f, $9a, $0c
+    .byte $ff
 
 ;level 9-3
 L_CastleArea9:
-    .db $55, $31, $0d, $01, $cf, $33, $fe, $39, $fe, $b2, $2e, $be, $fe, $31, $29, $8f
-    .db $9e, $43, $fe, $30, $16, $b1, $23, $09, $4e, $31, $4e, $40, $d7, $e0, $e6, $61
-    .db $fe, $3e, $f5, $62, $fa, $60, $0c, $df, $0c, $df, $0c, $d1, $1e, $3c, $2d, $40
-    .db $4e, $32, $5e, $36, $5e, $42, $ce, $38, $0d, $0b, $8e, $36, $8e, $40, $87, $37
-    .db $96, $36, $be, $3a, $cc, $5d, $06, $bd, $07, $3e, $a8, $64, $b8, $64, $c8, $64
-    .db $d8, $64, $e8, $64, $f8, $64, $fe, $31, $09, $e1, $1a, $60, $6d, $41, $9f, $26
-    .db $7d, $c7, $fd
+    .byte $55, $31, $0d, $01, $cf, $33, $fe, $39, $fe, $b2, $2e, $be, $fe, $31, $29, $8f
+    .byte $9e, $43, $fe, $30, $16, $b1, $23, $09, $4e, $31, $4e, $40, $d7, $e0, $e6, $61
+    .byte $fe, $3e, $f5, $62, $fa, $60, $0c, $df, $0c, $df, $0c, $d1, $1e, $3c, $2d, $40
+    .byte $4e, $32, $5e, $36, $5e, $42, $ce, $38, $0d, $0b, $8e, $36, $8e, $40, $87, $37
+    .byte $96, $36, $be, $3a, $cc, $5d, $06, $bd, $07, $3e, $a8, $64, $b8, $64, $c8, $64
+    .byte $d8, $64, $e8, $64, $f8, $64, $fe, $31, $09, $e1, $1a, $60, $6d, $41, $9f, $26
+    .byte $7d, $c7, $fd
 
 ;cloud level used by level 9-3
 L_CastleArea10:
-    .db $00, $f1, $fe, $b5, $0d, $02, $fe, $34, $07, $cf, $ce, $00, $0d, $05, $8d, $47
-    .db $fd
+    .byte $00, $f1, $fe, $b5, $0d, $02, $fe, $34, $07, $cf, $ce, $00, $0d, $05, $8d, $47
+    .byte $fd
 
 ;level 9-1 starting area
 L_GroundArea25:
-    .db $50, $02, $9f, $38, $ee, $01, $12, $b9, $77, $7b, $de, $0f, $6d, $c7, $fd
+    .byte $50, $02, $9f, $38, $ee, $01, $12, $b9, $77, $7b, $de, $0f, $6d, $c7, $fd
 
 ;two unused levels
 L_GroundArea26:
-    .db $fd
+    .byte $fd
 L_GroundArea27:
-    .db $fd
+    .byte $fd
 
 ;level 9-1 water area
 L_WaterArea6:
-    .db $00, $a1, $0a, $60, $19, $61, $28, $62, $39, $71, $58, $62, $69, $61, $7a, $60
-    .db $7c, $f5, $a5, $11, $fe, $20, $1f, $80, $5e, $21, $80, $3f, $8f, $65, $d6, $74
-    .db $5e, $a0, $6f, $66, $9e, $21, $c3, $37, $47, $f3, $9e, $20, $fe, $21, $0d, $06
-    .db $57, $32, $64, $11, $66, $10, $83, $a7, $87, $27, $0d, $09, $1d, $4a, $5f, $38
-    .db $6d, $c1, $af, $26, $6d, $c7, $fd
+    .byte $00, $a1, $0a, $60, $19, $61, $28, $62, $39, $71, $58, $62, $69, $61, $7a, $60
+    .byte $7c, $f5, $a5, $11, $fe, $20, $1f, $80, $5e, $21, $80, $3f, $8f, $65, $d6, $74
+    .byte $5e, $a0, $6f, $66, $9e, $21, $c3, $37, $47, $f3, $9e, $20, $fe, $21, $0d, $06
+    .byte $57, $32, $64, $11, $66, $10, $83, $a7, $87, $27, $0d, $09, $1d, $4a, $5f, $38
+    .byte $6d, $c1, $af, $26, $6d, $c7, $fd
 
 ;level 9-2
 L_WaterArea7:
-    .db $50, $11, $d7, $73, $fe, $1a, $6f, $e2, $1f, $e5, $bf, $63, $c7, $a8, $df, $61
-    .db $15, $f1, $7f, $62, $9b, $2f, $a8, $72, $fe, $10, $69, $f1, $b7, $25, $c5, $71
-    .db $33, $ac, $5f, $71, $8d, $4a, $aa, $14, $d1, $71, $17, $95, $26, $42, $72, $42
-    .db $73, $12, $7a, $14, $c6, $14, $d5, $42, $fe, $11, $7f, $b8, $8d, $c1, $cf, $26
-    .db $6d, $c7, $fd
+    .byte $50, $11, $d7, $73, $fe, $1a, $6f, $e2, $1f, $e5, $bf, $63, $c7, $a8, $df, $61
+    .byte $15, $f1, $7f, $62, $9b, $2f, $a8, $72, $fe, $10, $69, $f1, $b7, $25, $c5, $71
+    .byte $33, $ac, $5f, $71, $8d, $4a, $aa, $14, $d1, $71, $17, $95, $26, $42, $72, $42
+    .byte $73, $12, $7a, $14, $c6, $14, $d5, $42, $fe, $11, $7f, $b8, $8d, $c1, $cf, $26
+    .byte $6d, $c7, $fd
 
 ;level 9-4
 L_WaterArea8:
-    .db $57, $00, $0b, $3f, $0b, $bf, $0b, $bf, $73, $36, $9a, $30, $a5, $64, $b6, $31
-    .db $d4, $61, $0b, $bf, $13, $63, $4a, $60, $53, $66, $a5, $34, $b3, $67, $e5, $65
-    .db $f4, $60, $0b, $bf, $14, $60, $53, $67, $67, $32, $c4, $62, $d4, $31, $f3, $61
-    .db $fa, $60, $0b, $bf, $04, $30, $09, $61, $14, $65, $63, $65, $6a, $60, $0b, $bf
-    .db $0f, $38, $0b, $bf, $1d, $41, $3e, $42, $5f, $20, $ce, $40, $0b, $bf, $3d, $47
-    .db $fd
+    .byte $57, $00, $0b, $3f, $0b, $bf, $0b, $bf, $73, $36, $9a, $30, $a5, $64, $b6, $31
+    .byte $d4, $61, $0b, $bf, $13, $63, $4a, $60, $53, $66, $a5, $34, $b3, $67, $e5, $65
+    .byte $f4, $60, $0b, $bf, $14, $60, $53, $67, $67, $32, $c4, $62, $d4, $31, $f3, $61
+    .byte $fa, $60, $0b, $bf, $04, $30, $09, $61, $14, $65, $63, $65, $6a, $60, $0b, $bf
+    .byte $0f, $38, $0b, $bf, $1d, $41, $3e, $42, $5f, $20, $ce, $40, $0b, $bf, $3d, $47
+    .byte $fd
 
 ;-------------------------------------------------------------------------------------
 
 ; unused space
 
-.db $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
-.db $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
-.db $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
-.db $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
+.byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
+.byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
+.byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
+.byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
 
 AlternateSoundEngine:
     lda GamePauseStatus     ;check to see if game is paused
@@ -1355,8 +1394,8 @@ OddT:    and #$0f                  ;write to modulation table
          rts
 
 ModTableData:
-ModTable1: .db $07, $07, $07, $07, $01, $01, $01, $01, $01, $01, $01, $01, $07, $07, $07, $07
-ModTable2: .db $77, $77, $77, $77, $11, $11, $11, $11, $11, $11, $11, $11, $77, $77, $77, $77
+ModTable1: .byte $07, $07, $07, $07, $01, $01, $01, $01, $01, $01, $01, $01, $07, $07, $07, $07
+ModTable2: .byte $77, $77, $77, $77, $11, $11, $11, $11, $11, $11, $11, $11, $77, $77, $77, $77
 
 LengthDecoder:
     tax
@@ -1419,9 +1458,9 @@ SetFreq_FDS:
 ;-------------------------------------------------------------------------------------
 
 MusicHeaderOffsetData:
-    .db VictoryPart1AHdr-MHD, VictoryPart1AHdr-MHD, VictoryPart1BHdr-MHD, VictoryPart1AHdr-MHD
-    .db VictoryPart2AHdr-MHD, VictoryPart2BHdr-MHD, VictoryPart2AHdr-MHD, VictoryPart2BHdr-MHD
-    .db VictoryPart2CHdr-MHD, VictoryPart2AHdr-MHD, VictoryPart2DHdr-MHD
+    .byte VictoryPart1AHdr-MHD, VictoryPart1AHdr-MHD, VictoryPart1BHdr-MHD, VictoryPart1AHdr-MHD
+    .byte VictoryPart2AHdr-MHD, VictoryPart2BHdr-MHD, VictoryPart2AHdr-MHD, VictoryPart2BHdr-MHD
+    .byte VictoryPart2CHdr-MHD, VictoryPart2AHdr-MHD, VictoryPart2DHdr-MHD
 
 ;header format here is as follows: 
 ;1 byte - length byte offset
@@ -1434,15 +1473,15 @@ MusicHeaderOffsetData:
 ;1 byte - waveform ID
 
 MusicHeaderData:
-VictoryPart1AHdr: .db $00, <VictoryM_P1AData, >VictoryM_P1AData, $3e, $14, $b0, $24, $01
-VictoryPart1BHdr: .db $00, <VictoryM_P1BData, >VictoryM_P1BData, $50, $21, $61, $31, $02
-VictoryPart2AHdr: .db $00, <VictoryM_P2AData, >VictoryM_P2AData, $43, $1c, $b5, $29, $01
-VictoryPart2CHdr: .db $00, <VictoryM_P2CData, >VictoryM_P2CData, $50, $20, $61, $31, $02
-VictoryPart2DHdr: .db $08, <VictoryM_P2DData, >VictoryM_P2DData, $09, $04, $1e, $06, $01
-VictoryPart2BHdr: .db $08, <VictoryM_P2BData, >VictoryM_P2BData, $3a, $10, $9e, $28, $01
+VictoryPart1AHdr: .byte $00, <VictoryM_P1AData, >VictoryM_P1AData, $3e, $14, $b0, $24, $01
+VictoryPart1BHdr: .byte $00, <VictoryM_P1BData, >VictoryM_P1BData, $50, $21, $61, $31, $02
+VictoryPart2AHdr: .byte $00, <VictoryM_P2AData, >VictoryM_P2AData, $43, $1c, $b5, $29, $01
+VictoryPart2CHdr: .byte $00, <VictoryM_P2CData, >VictoryM_P2CData, $50, $20, $61, $31, $02
+VictoryPart2DHdr: .byte $08, <VictoryM_P2DData, >VictoryM_P2DData, $09, $04, $1e, $06, $01
+VictoryPart2BHdr: .byte $08, <VictoryM_P2BData, >VictoryM_P2BData, $3a, $10, $9e, $28, $01
 
 ;residual data, probably from an old header
-    .db $00, $4b, $d0
+    .byte $00, $4b, $d0
 
 ;music data format here is the same as in sm2main file
 ;with a few exceptions: the value $00 does nothing special
@@ -1451,131 +1490,131 @@ VictoryPart2BHdr: .db $08, <VictoryM_P2BData, >VictoryM_P2BData, $3a, $10, $9e, 
 
 VictoryM_P1AData:
 ;square 2
-    .db $84, $12, $86, $0c, $84, $62, $10, $86
-    .db $12, $84, $1c, $22, $1e, $22, $26, $18
-    .db $1e, $04, $1c, $00
+    .byte $84, $12, $86, $0c, $84, $62, $10, $86
+    .byte $12, $84, $1c, $22, $1e, $22, $26, $18
+    .byte $1e, $04, $1c, $00
 ;square 1
-    .db $e2, $e0, $e2, $9d, $1f, $21, $a3, $2d
-    .db $74, $f4, $31, $35, $37, $2b, $b1, $2d
+    .byte $e2, $e0, $e2, $9d, $1f, $21, $a3, $2d
+    .byte $74, $f4, $31, $35, $37, $2b, $b1, $2d
 ;FDS sound
-    .db $83, $16, $14, $16, $86, $10, $84, $12
-    .db $14, $86, $16, $84, $20, $81, $28, $83
-    .db $28, $84, $24, $28, $2a, $1e, $86, $24
-    .db $84, $20
+    .byte $83, $16, $14, $16, $86, $10, $84, $12
+    .byte $14, $86, $16, $84, $20, $81, $28, $83
+    .byte $28, $84, $24, $28, $2a, $1e, $86, $24
+    .byte $84, $20
 ;triangle
-    .db $84, $12, $14, $04, $18, $1a, $1c, $14
-    .db $26, $22, $1e, $1c, $18, $1e, $22, $0c
-    .db $14
+    .byte $84, $12, $14, $04, $18, $1a, $1c, $14
+    .byte $26, $22, $1e, $1c, $18, $1e, $22, $0c
+    .byte $14
 
 VictoryM_P1BData:
 ;square 2
-    .db $81, $22, $83, $22, $86, $24, $85, $18
-    .db $82, $1e, $80, $1e, $83, $1c, $83, $18
-    .db $84, $1c, $81, $26, $83, $26, $86, $26
-    .db $85, $1e, $82, $24, $86, $22, $84, $1e
-    .db $00
+    .byte $81, $22, $83, $22, $86, $24, $85, $18
+    .byte $82, $1e, $80, $1e, $83, $1c, $83, $18
+    .byte $84, $1c, $81, $26, $83, $26, $86, $26
+    .byte $85, $1e, $82, $24, $86, $22, $84, $1e
+    .byte $00
 ;square 1
-    .db $74, $f4, $b5, $6b, $b0, $30, $ec, $ea
-    .db $2d, $76, $f6, $b7, $6d, $b0, $b5, $31
+    .byte $74, $f4, $b5, $6b, $b0, $30, $ec, $ea
+    .byte $2d, $76, $f6, $b7, $6d, $b0, $b5, $31
 ;FDS sound
-    .db $81, $10, $83, $10, $86, $10, $85, $08
-    .db $82, $0c, $80, $0c, $83, $0a, $08, $84
-    .db $0a, $81, $12, $83, $12, $86, $12, $85
-    .db $0a, $82, $0c, $86, $10, $84, $0c
+    .byte $81, $10, $83, $10, $86, $10, $85, $08
+    .byte $82, $0c, $80, $0c, $83, $0a, $08, $84
+    .byte $0a, $81, $12, $83, $12, $86, $12, $85
+    .byte $0a, $82, $0c, $86, $10, $84, $0c
 ;triangle
-    .db $84, $12, $1c, $20, $24, $2a, $26, $24
-    .db $26, $22, $1e, $22, $24, $1e, $22, $0c
-    .db $1e
+    .byte $84, $12, $1c, $20, $24, $2a, $26, $24
+    .byte $26, $22, $1e, $22, $24, $1e, $22, $0c
+    .byte $1e
 ;noise (also used by part 1A)
-    .db $11, $11, $d0, $d0, $d0, $11, $00
+    .byte $11, $11, $d0, $d0, $d0, $11, $00
 
 VictoryM_P2AData:
 ;square 2
-    .db $83, $2c, $2a, $2c, $86, $26, $84, $28
-    .db $2a, $86, $2c, $84, $36, $81, $40, $83
-    .db $40, $84, $3a, $40, $3e, $34, $00
+    .byte $83, $2c, $2a, $2c, $86, $26, $84, $28
+    .byte $2a, $86, $2c, $84, $36, $81, $40, $83
+    .byte $40, $84, $3a, $40, $3e, $34, $00
 
 VictoryM_P2BData:
 ;square 2
-    .db $86, $3a, $84, $36, $00
+    .byte $86, $3a, $84, $36, $00
 ;square 1 of part 2A
-    .db $1d, $95, $19, $1b, $9d, $27, $2d, $29
-    .db $2d, $31, $23
+    .byte $1d, $95, $19, $1b, $9d, $27, $2d, $29
+    .byte $2d, $31, $23
 ;square 1 of part 2B
-    .db $a9, $27
+    .byte $a9, $27
 ;FDS sound of part 2A
-    .db $83, $20, $1e, $20, $86, $1a, $84, $1c
-    .db $1e, $86, $20, $84, $2a, $81, $32, $83
-    .db $32, $84, $2e, $32, $34, $28
+    .byte $83, $20, $1e, $20, $86, $1a, $84, $1c
+    .byte $1e, $86, $20, $84, $2a, $81, $32, $83
+    .byte $32, $84, $2e, $32, $34, $28
 ;FDS sound of part 2B
-    .db $86, $2e, $84, $2a
+    .byte $86, $2e, $84, $2a
 ;triangle of part 2A
-    .db $84, $1c, $1e, $04, $22, $24, $26, $1e
-    .db $30, $2c, $28, $26, $22, $28
+    .byte $84, $1c, $1e, $04, $22, $24, $26, $1e
+    .byte $30, $2c, $28, $26, $22, $28
 ;triangle of part 2B
-    .db $2c, $14, $1e
+    .byte $2c, $14, $1e
 
 VictoryM_P2CData:
 ;square 2
-    .db $81, $40, $83, $40, $86, $40, $85, $34
-    .db $82, $3a, $80, $3a, $83, $36, $34, $84
-    .db $36, $81, $3e, $83, $3e, $86, $3e, $85
-    .db $36, $82, $3a, $86, $40, $84, $3a, $00
+    .byte $81, $40, $83, $40, $86, $40, $85, $34
+    .byte $82, $3a, $80, $3a, $83, $36, $34, $84
+    .byte $36, $81, $3e, $83, $3e, $86, $3e, $85
+    .byte $36, $82, $3a, $86, $40, $84, $3a, $00
 ;square 1
-    .db $6c, $ec, $af, $63, $a8, $29, $c4, $e6
-    .db $e2, $27, $70, $f0, $b1, $69, $ae, $ad
-    .db $29
+    .byte $6c, $ec, $af, $63, $a8, $29, $c4, $e6
+    .byte $e2, $27, $70, $f0, $b1, $69, $ae, $ad
+    .byte $29
 ;FDS sound
-    .db $81, $1a, $83, $1a, $86, $1a, $85, $10
-    .db $82, $16, $80, $16, $83, $12, $10, $84
-    .db $12, $81, $1c, $83, $1c, $86, $1c, $85
-    .db $12, $82, $16, $86, $1a, $84, $16
+    .byte $81, $1a, $83, $1a, $86, $1a, $85, $10
+    .byte $82, $16, $80, $16, $83, $12, $10, $84
+    .byte $12, $81, $1c, $83, $1c, $86, $1c, $85
+    .byte $12, $82, $16, $86, $1a, $84, $16
 ;triangle
-    .db $84, $1c, $26, $2a, $2e, $34, $30, $2e
-    .db $30, $2c, $28, $2c, $2e, $28, $2c, $14
-    .db $28
+    .byte $84, $1c, $26, $2a, $2e, $34, $30, $2e
+    .byte $30, $2c, $28, $2c, $2e, $28, $2c, $14
+    .byte $28
 ;noise of part 2A, 2B and 2C
-    .db $11, $11, $d0, $d0, $d0, $11, $00
+    .byte $11, $11, $d0, $d0, $d0, $11, $00
 
 VictoryM_P2DData:
 ;square 2
-    .db $87, $3a, $36, $00
+    .byte $87, $3a, $36, $00
 ;square 1
-    .db $e9, $e7
+    .byte $e9, $e7
 ;FDS sound
-    .db $87, $2e, $2a
+    .byte $87, $2e, $2a
 ;triangle
-    .db $83, $16, $1c, $22, $28, $2e, $34, $84
-    .db $3a, $83, $34, $22, $34, $84, $36, $83
-    .db $1e, $1e, $1e, $86, $1e
+    .byte $83, $16, $1c, $22, $28, $2e, $34, $84
+    .byte $3a, $83, $34, $22, $34, $84, $36, $83
+    .byte $1e, $1e, $1e, $86, $1e
 ;noise of part 2D
-    .db $11, $11, $d0, $d0, $d0, $11, $00
+    .byte $11, $11, $d0, $d0, $d0, $11, $00
 
 WaveformData2:
-    .db $10, $2c, $2e, $27, $29, $2b, $2a, $28
-    .db $25, $29, $2f, $2d, $2c, $2a, $22, $24
-    .db $34, $3f, $31, $2d, $3a, $3b, $27, $12
-    .db $0a, $1f, $2c, $27, $23, $28, $22, $1e
+    .byte $10, $2c, $2e, $27, $29, $2b, $2a, $28
+    .byte $25, $29, $2f, $2d, $2c, $2a, $22, $24
+    .byte $34, $3f, $31, $2d, $3a, $3b, $27, $12
+    .byte $0a, $1f, $2c, $27, $23, $28, $22, $1e
 
 VolEnvData2:
-    .db $a0, $04, $18, $60
+    .byte $a0, $04, $18, $60
 VolEnvData1:
-    .db $94, $02, $44, $30, $0a, $50, $a0, $02
-    .db $36, $35, $80, $34
+    .byte $94, $02, $44, $30, $0a, $50, $a0, $02
+    .byte $36, $35, $80, $34
 
 FDSFreqLookupTbl:
-    .db $01, $44, $01, $58, $01, $99, $02, $22
-    .db $02, $42, $02, $65, $02, $b0, $02, $d9
-    .db $03, $04, $03, $32, $03, $63, $03, $96
-    .db $03, $cd, $04, $07, $04, $44, $04, $85
-    .db $04, $ca, $05, $13, $05, $60, $05, $b2
-    .db $06, $08, $06, $64, $06, $c6, $07, $2d
-    .db $07, $9a, $08, $0e, $08, $88, $09, $95
-    .db $0a, $26, $00, $00
+    .byte $01, $44, $01, $58, $01, $99, $02, $22
+    .byte $02, $42, $02, $65, $02, $b0, $02, $d9
+    .byte $03, $04, $03, $32, $03, $63, $03, $96
+    .byte $03, $cd, $04, $07, $04, $44, $04, $85
+    .byte $04, $ca, $05, $13, $05, $60, $05, $b2
+    .byte $06, $08, $06, $64, $06, $c6, $07, $2d
+    .byte $07, $9a, $08, $0e, $08, $88, $09, $95
+    .byte $0a, $26, $00, $00
 
 VictoryMusEnvData:
-    .db $97, $98, $9a, $9b, $9b, $9a, $9a, $99
-    .db $99, $98, $98, $97, $97, $96, $96, $95
+    .byte $97, $98, $9a, $9b, $9b, $9a, $9a, $99
+    .byte $99, $98, $98, $97, $97, $96, $96, $95
 
 ;header format here is as follows:
 ;2 bytes - waveform data address
@@ -1585,29 +1624,29 @@ VictoryMusEnvData:
 ;1 byte  - modulation table data offset * 2
 
 WaveformHeaderOffsets:
-    .db Wave1Hdr-WaveformHeaderOffsets, Wave2Hdr-WaveformHeaderOffsets
+    .byte Wave1Hdr-WaveformHeaderOffsets, Wave2Hdr-WaveformHeaderOffsets
 
 WaveformHeaderData:
-Wave1Hdr:     .db <WaveformData1, >WaveformData1, $44, <VolEnvData1
-              .db >VolEnvData1, <SweepModData1, >SweepModData1, (ModTable2-ModTableData) * 2
-Wave2Hdr:     .db <WaveformData2, >WaveformData2, $60, <VolEnvData2
-              .db >VolEnvData2, <SweepModData2, >SweepModData2, (ModTable1-ModTableData) * 2
-              .db $00
+Wave1Hdr:     .byte <WaveformData1, >WaveformData1, $44, <VolEnvData1
+              .byte >VolEnvData1, <SweepModData1, >SweepModData1, (ModTable2-ModTableData) * 2
+Wave2Hdr:     .byte <WaveformData2, >WaveformData2, $60, <VolEnvData2
+              .byte >VolEnvData2, <SweepModData2, >SweepModData2, (ModTable1-ModTableData) * 2
+              .byte $00
 
 WaveformData1:
-    .db $01, $02, $03, $04, $06, $07, $09, $0b
-    .db $0e, $10, $13, $18, $20, $2b, $34, $3c
-    .db $3f, $3f, $3e, $3d, $3a, $36, $32, $2f
-    .db $2c, $29, $26, $24, $21, $1e, $18, $19
+    .byte $01, $02, $03, $04, $06, $07, $09, $0b
+    .byte $0e, $10, $13, $18, $20, $2b, $34, $3c
+    .byte $3f, $3f, $3e, $3d, $3a, $36, $32, $2f
+    .byte $2c, $29, $26, $24, $21, $1e, $18, $19
 
 SweepModData1:
-    .db $80, $1b, $81, $0a, $00, $04, $82, $10, $00, $60
+    .byte $80, $1b, $81, $0a, $00, $04, $82, $10, $00, $60
 SweepModData2:
-    .db $80, $02, $80, $00, $00, $60
+    .byte $80, $02, $80, $00, $00, $60
 
 MusicLengthLookupTbl:
-    .db $24, $12, $0d, $09, $1b, $28, $36, $12
-    .db $24, $12, $0d, $09, $1b, $28, $36, $6c
+    .byte $24, $12, $0d, $09, $1b, $28, $36, $12
+    .byte $24, $12, $0d, $09, $1b, $28, $36, $6c
 
 .ifdef ANN
 Dump_Squ1_Regs:
