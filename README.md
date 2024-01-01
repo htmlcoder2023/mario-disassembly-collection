@@ -19,6 +19,10 @@ Credits:
 
 4. Xkeeper0
    
-   a. Super Mario Bros. 2 (USA)
+   a. Super Mario Bros. 2 (PRG0)
+
+   b. Super Mario Bros. 2 (PRG1)
+
+   c. Super Mario USA
+
    
-   b. Super Mario USA
