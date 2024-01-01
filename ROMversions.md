@@ -27,6 +27,7 @@
    d. PAL version (not included)
 
 5. Super Mario Bros. 3 (NES)
+   
    a. Japanese version (not included)
 
    b. PRG0 version (not included)
