@@ -18,10 +18,19 @@
    
 4. Super Mario Bros. 2 (NES)
    
-   a. PRG0 (included, original disassembly 2/20/2023, has game-breaking glitch regarding mini-Fryguys)
+   a. PRG0 version (included, original disassembly 2/20/2023, has game-breaking glitch regarding mini-Fryguys)
    
-   b. PRG1 (included, original disassembly 2/20/2023)
+   b. PRG1 version (included, original disassembly 2/20/2023)
    
    c. Japanese version (included, original disassembly 2/20/2023)
    
-   d. PAL (not included)
+   d. PAL version (not included)
+
+5. Super Mario Bros. 3 (NES)
+   a. Japanese version (not included)
+
+   b. PRG0 version (not included)
+
+   c. PRG1 version (included, original disassembly 2/17/2018)
+
+   d. PAL version (not included)
