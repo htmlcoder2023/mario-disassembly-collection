@@ -1,3 +1,5 @@
+del smbann.o
+del smbann.fds
 ca65 -t nes -l ann.lst ann_fdswrap.asm -o smbann.o
 del ann_fdswrap.asm
 ren header.asm ann_fdswrap.asm
