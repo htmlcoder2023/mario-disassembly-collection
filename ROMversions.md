@@ -18,7 +18,7 @@
    
 4. Super Mario Bros. 2 (NES)
    
-   a. PRG0 (not included, has game-breaking glitch regarding mini-Fryguys)
+   a. PRG0 (included, original disassembly 2/20/2023, has game-breaking glitch regarding mini-Fryguys)
    
    b. PRG1 (included, original disassembly 2/20/2023)
    
